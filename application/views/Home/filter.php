@@ -1181,7 +1181,7 @@
 
 
 
-    <?php foreach ($master as $key => $value) { ?>
+    <?php foreach ($data as $key => $value) { ?>
     L.marker([<?= $value->latitude ?>, <?= $value->longitude ?>], {
         icon: L.icon({
             iconUrl: '<?= base_url('marker/hotmix.png')  ?>',
@@ -1189,8 +1189,9 @@
         })
     }).addTo(grupbangunan).bindPopup(
         "Nama  : <?= $value->nama_mitra?></br>" +
-        "Alamat  : <?= $value->alamat  ?></br>" +
-        "Telpon : <?= $value->no_tlp ?></br>" +
+        "Barang  : <?= $value->barang  ?></br>" +
+        "Harga : <?= $value->harga ?></br>" +
+        "Tanggal : <?= $value->tanggal ?></br>" +
         "<center><br><br><a href='<?= base_url('Dashboard/detail/' . $value->id) ?>' class='btn btn-sm btn-outline-primary'>Detail</a>"
     );
     <?php } ?>

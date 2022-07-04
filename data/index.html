@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet-src.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/Polygon_4.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        var overlay_ESRIWorldTopo_0 = L.tileLayer('http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+            opacity: 1.0
+        });
+        overlay_ESRIWorldTopo_0.addTo(map);
+        map.addLayer(overlay_ESRIWorldTopo_0);
+        var overlay_GoogleRoads_1 = L.tileLayer('https://mt1.google.com/vt/lyrs=h&x={x}&y={y}&z={z}', {
+            opacity: 1.0
+        });
+        overlay_GoogleRoads_1.addTo(map);
+        map.addLayer(overlay_GoogleRoads_1);
+        var overlay_GoogleMaps_2 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            opacity: 1.0
+        });
+        overlay_GoogleMaps_2.addTo(map);
+        map.addLayer(overlay_GoogleMaps_2);
+        var overlay_GoogleSatelliteHybrid_3 = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+            opacity: 1.0
+        });
+        overlay_GoogleSatelliteHybrid_3.addTo(map);
+        map.addLayer(overlay_GoogleSatelliteHybrid_3);
+        function pop_Polygon_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Keterangan</th>\
+                        <td>' + (feature.properties['Keterangan'] !== null ? Autolinker.link(String(feature.properties['Keterangan'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Status_Lah</th>\
+                        <td>' + (feature.properties['Status_Lah'] !== null ? Autolinker.link(String(feature.properties['Status_Lah'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Ha</th>\
+                        <td>' + (feature.properties['Ha'] !== null ? Autolinker.link(String(feature.properties['Ha'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Pokok</th>\
+                        <td>' + (feature.properties['Pokok'] !== null ? Autolinker.link(String(feature.properties['Pokok'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Polygon_4_0(feature) {
+            switch(String(feature.properties['Keterangan'])) {
+                case 'Blok A Main Nursery':
+                    return {
+                pane: 'pane_Polygon_4',
+                opacity: 1,
+                color: 'rgba(175,179,138,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(235,113,68,0.3)',
+            }
+                    break;
+                case 'Blok B Main Nursery':
+                    return {
+                pane: 'pane_Polygon_4',
+                opacity: 1,
+                color: 'rgba(175,179,138,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(235,113,68,0.3)',
+            }
+                    break;
+                case 'Blok C Main Nursery':
+                    return {
+                pane: 'pane_Polygon_4',
+                opacity: 1,
+                color: 'rgba(175,179,138,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(235,113,68,0.3)',
+            }
+                    break;
+                case 'Blok D Main Nursery':
+                    return {
+                pane: 'pane_Polygon_4',
+                opacity: 1,
+                color: 'rgba(175,179,138,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(235,113,68,0.3)',
+            }
+                    break;
+                case 'Kantor':
+                    return {
+                pane: 'pane_Polygon_4',
+                opacity: 1,
+                color: 'rgba(175,179,138,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(21,167,220,0.3)',
+            }
+                    break;
+                case 'Kolam':
+                    return {
+                pane: 'pane_Polygon_4',
+                opacity: 1,
+                color: 'rgba(175,179,138,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(215,176,83,0.3)',
+            }
+                    break;
+                case 'Lahan Bibit Baru':
+                    return {
+                pane: 'pane_Polygon_4',
+                opacity: 1,
+                color: 'rgba(175,179,138,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(205,51,77,0.3)',
+            }
+                    break;
+                case 'Mess Karyawan':
+                    return {
+                pane: 'pane_Polygon_4',
+                opacity: 1,
+                color: 'rgba(175,179,138,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(90,228,145,0.3)',
+            }
+                    break;
+                case 'Pabrik':
+                    return {
+                pane: 'pane_Polygon_4',
+                opacity: 1,
+                color: 'rgba(175,179,138,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(42,94,206,0.3)',
+            }
+                    break;
+                case 'TBM 2':
+                    return {
+                pane: 'pane_Polygon_4',
+                opacity: 1,
+                color: 'rgba(175,179,138,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,236,84,0.3)',
+            }
+                    break;
+                case 'TBM 3':
+                    return {
+                pane: 'pane_Polygon_4',
+                opacity: 1,
+                color: 'rgba(175,179,138,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(180,128,224,0.3)',
+            }
+                    break;
+                case 'TM 2':
+                    return {
+                pane: 'pane_Polygon_4',
+                opacity: 1,
+                color: 'rgba(175,179,138,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(47,23,228,0.3)',
+            }
+                    break;
+                case 'TM 3':
+                    return {
+                pane: 'pane_Polygon_4',
+                opacity: 1,
+                color: 'rgba(175,179,138,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(139,207,83,0.3)',
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_Polygon_4',
+                opacity: 1,
+                color: 'rgba(175,179,138,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(217,99,168,0.3)',
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Polygon_4');
+        map.getPane('pane_Polygon_4').style.zIndex = 404;
+        map.getPane('pane_Polygon_4').style['mix-blend-mode'] = 'normal';
+        var layer_Polygon_4 = new L.geoJson(json_Polygon_4, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_Polygon_4',
+            onEachFeature: pop_Polygon_4,
+            style: style_Polygon_4_0,
+        });
+        bounds_group.addLayer(layer_Polygon_4);
+        map.addLayer(layer_Polygon_4);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Polygon<br /><table><tr><td style="text-align: center;"><img src="legend/Polygon_4_BlokAMainNursery0.png" /></td><td>Blok A Main Nursery</td></tr><tr><td style="text-align: center;"><img src="legend/Polygon_4_BlokBMainNursery1.png" /></td><td>Blok B Main Nursery</td></tr><tr><td style="text-align: center;"><img src="legend/Polygon_4_BlokCMainNursery2.png" /></td><td>Blok C Main Nursery</td></tr><tr><td style="text-align: center;"><img src="legend/Polygon_4_BlokDMainNursery3.png" /></td><td>Blok D Main Nursery</td></tr><tr><td style="text-align: center;"><img src="legend/Polygon_4_Kantor4.png" /></td><td>Kantor</td></tr><tr><td style="text-align: center;"><img src="legend/Polygon_4_Kolam5.png" /></td><td>Kolam</td></tr><tr><td style="text-align: center;"><img src="legend/Polygon_4_LahanBibitBaru6.png" /></td><td>Lahan Bibit Baru</td></tr><tr><td style="text-align: center;"><img src="legend/Polygon_4_MessKaryawan7.png" /></td><td>Mess Karyawan</td></tr><tr><td style="text-align: center;"><img src="legend/Polygon_4_Pabrik8.png" /></td><td>Pabrik</td></tr><tr><td style="text-align: center;"><img src="legend/Polygon_4_TBM29.png" /></td><td>TBM 2</td></tr><tr><td style="text-align: center;"><img src="legend/Polygon_4_TBM310.png" /></td><td>TBM 3</td></tr><tr><td style="text-align: center;"><img src="legend/Polygon_4_TM211.png" /></td><td>TM 2</td></tr><tr><td style="text-align: center;"><img src="legend/Polygon_4_TM312.png" /></td><td>TM 3</td></tr><tr><td style="text-align: center;"><img src="legend/Polygon_4_13.png" /></td><td></td></tr></table>': layer_Polygon_4,"Google Satellite Hybrid": overlay_GoogleSatelliteHybrid_3,"Google Maps": overlay_GoogleMaps_2,"Google Roads": overlay_GoogleRoads_1,"ESRI World Topo": overlay_ESRIWorldTopo_0,}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
